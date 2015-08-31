@@ -52,11 +52,30 @@ class Board:
 		# Update board state
 		self.state[position[0]*3+position[1]] = state
 		# Check for winners
-		self.__checkWinner(state)
+		self.winner = state if self.__checkWinner(state)
 
 	def __checkWinner(self,state):
-		# Check for a winner and update the self.winner state
-		pass
+		# Check if 'state' is in a winning position
+		# Scan columns and rows
+		for ix1 in range(3):
+			row_same == True
+			col_same == True
+			for ix2 in range(3):
+				row_same = row_same and (self.state[ix2*3+ix1] == state)
+				col_same = col_same and (self.state[ix1*3+ix2] == state)
+			if (row_same or col_same):
+				return True
+		# Scan diagonals
+		right_diag == True
+		left_diag  == True
+		for ii in range(3):
+			right_diag = right_diag and (self.state[ii*4] == state)
+			left_diag  = left_diag and (self.state[ii*2 + 2] == state)
+		if (left_diag or right_diag):
+			return  True
+		return False
+
+
 
 
 
