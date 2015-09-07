@@ -93,12 +93,12 @@ class Board:
 			return  True
 		return False
 
-def Move:
+class Move:
 	def __init__(self,bigsquare,smallsquare,player_state):
 		self.moves  = [bigsquare smallsquare]
 		self.player = player_state
 
-def Game:
+class Game:
 	def __init__(self,player1,player2):
 		self.players = [player1, player2] # X then O
 		self.cur_player = 0
