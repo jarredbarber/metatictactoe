@@ -15,6 +15,14 @@ class State:
 		return (self.state == 2)
 	def __eq__(self,other):
 		return (self.state == other.state)
+
+	# Board stuff
+	def toState(self):
+		return self
+
+	# Move validation stuff
+	def move(self,move):
+		self.state = move.player.state
 	#
 	# Static methods
 	#
@@ -47,12 +55,22 @@ class Board:
 			   (self.O() and other.O()) or
 			   (self.nil() and other.nil())
 
-	def move(self,position,state):
+	def toState(self):
+		if self.O():
+			return State.O()
+		elif self.X():
+			return State.X()
+		else:
+			return State.nil()
+
+	def move(self,move):
 		# TODO: Validate move
 		# Update board state
-		self.state[position[0]*3+position[1]] = state
+		position = move.moves[0]
+		move.moves.pop(0)
+		self.state[position[0]*3+position[1]].move(move)
 		# Check for winners
-		self.winner = state if self.__checkWinner(state)
+		self.winner = move.player if self.__checkWinner(move.player)
 
 	def __checkWinner(self,state):
 		# Check if 'state' is in a winning position
@@ -75,7 +93,25 @@ class Board:
 			return  True
 		return False
 
+def Move:
+	def __init__(self,bigsquare,smallsquare,player_state):
+		self.moves  = [bigsquare smallsquare]
+		self.player = player_state
 
+def Game:
+	def __init__(self,player1,player2):
+		self.players = [player1, player2] # X then O
+		self.cur_player = 0
+		self.board = Board(Board(State.nil()))
 
+	def playMove(self):
+		move = self.players[currentPlayer].getMove(self.board)
+		# Parse out Move object and pass to Board
+		self.cur_player = (self.cur_player + 1) % 2
+		return self.board.toState()
 
-
+	def gameLoop(self):
+		gameState = State.nil()
+		while (gameState.nil()):
+			gameState = self.playMove()
+		return gameState
